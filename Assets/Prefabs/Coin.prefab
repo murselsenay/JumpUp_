@@ -130,5 +130,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0d382312fbf101419452495b0da18c0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  coinCollectingEffect: {fileID: 2767083512422533794, guid: 98f983e53f0e0594bbd967f2d2a7ed31,
+  coinCollectingEffect: {fileID: 2276298323775215568, guid: f5cdd49a2ebdaf7418f016768faa7023,
     type: 3}
