@@ -7,7 +7,7 @@ public class GameManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        Invoke("MoveCameraUp", 5f);
     }
 
     // Update is called once per frame
@@ -15,4 +15,11 @@ public class GameManager : MonoBehaviour
     {
         
     }
+
+
+    void MoveCameraUp()
+    {
+        CameraController.instance.Warn();
+    }
+
 }
