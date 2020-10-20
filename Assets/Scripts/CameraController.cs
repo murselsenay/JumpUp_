@@ -27,6 +27,7 @@ public class CameraController : MonoBehaviour
     {
         instance = this;
         floorCount = floorCount - 1;
+        Debug.Log(Screen.width);
     }
 
     // Update is called once per frame
@@ -75,12 +76,15 @@ public class CameraController : MonoBehaviour
 
     void Shake()
     {
-        Instantiate(tileParticle, new Vector3(transform.position.x, transform.position.y + 10f),Quaternion.identity);
         startPosition = transform.position;
         InvokeRepeating("StartCameraShaking", 0f, 0.005f);
         Invoke("StopCameraShaking", shakeTime);
     }
 
+    void ProduceFallingTile()
+    {
+        Instantiate(tileParticle, new Vector3(transform.position.x, transform.position.y + 10f), Quaternion.identity);
+    }
     void StartCameraShaking()
     {
         float cameraShakingOffsetX = Random.value * shakeMagnitude * 2 - shakeMagnitude;
