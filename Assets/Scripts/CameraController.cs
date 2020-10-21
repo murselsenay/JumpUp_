@@ -21,13 +21,13 @@ public class CameraController : MonoBehaviour
     public float shakeMagnitude = 0.05f;
     public float shakeTime = 0.5f;
 
-
+    Vector3 pos;
     // Start is called before the first frame update
     void Start()
     {
         instance = this;
         floorCount = floorCount - 1;
-        Debug.Log(Screen.width);
+        Debug.Log(pos);
     }
 
     // Update is called once per frame
@@ -78,12 +78,15 @@ public class CameraController : MonoBehaviour
     {
         startPosition = transform.position;
         InvokeRepeating("StartCameraShaking", 0f, 0.005f);
+        InvokeRepeating("ProduceFallingTile", 0.5f, 1f);
         Invoke("StopCameraShaking", shakeTime);
     }
 
     void ProduceFallingTile()
     {
-        Instantiate(tileParticle, new Vector3(transform.position.x, transform.position.y + 10f), Quaternion.identity);
+        pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.value, 2f, 0f));
+        pos.z = 0f;
+        Instantiate(tileParticle, pos, Quaternion.identity);
     }
     void StartCameraShaking()
     {
@@ -98,6 +101,7 @@ public class CameraController : MonoBehaviour
     void StopCameraShaking()
     {
         CancelInvoke("StartCameraShaking");
+        CancelInvoke("ProduceFallingTile");
         transform.position = startPosition;
     }
 }
