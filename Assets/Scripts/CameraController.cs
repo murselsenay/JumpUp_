@@ -77,19 +77,20 @@ public class CameraController : MonoBehaviour
     void Shake()
     {
         startPosition = transform.position;
+        InvokeRepeating("ProduceFallingTile", 0.5f, 0.5f);
         InvokeRepeating("StartCameraShaking", 0f, 0.005f);
-        InvokeRepeating("ProduceFallingTile", 0.5f, 1f);
         Invoke("StopCameraShaking", shakeTime);
     }
 
     void ProduceFallingTile()
     {
-        pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.value, 2f, 0f));
+        pos = Camera.main.ViewportToWorldPoint(new Vector3(Random.value, 1.1f, 0f));
         pos.z = 0f;
         Instantiate(tileParticle, pos, Quaternion.identity);
     }
     void StartCameraShaking()
     {
+        
         float cameraShakingOffsetX = Random.value * shakeMagnitude * 2 - shakeMagnitude;
         float cameraShakingOffsetY = Random.value * shakeMagnitude * 2 - shakeMagnitude;
         Vector3 cameraIntermadiatePosition = transform.position;
