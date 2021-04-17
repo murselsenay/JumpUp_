@@ -5,12 +5,11 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour
 {
-    public static CameraController instance;
+    public static CameraController Instance;
 
     Vector3 startPosition;
-    bool canGoUp = false;
     public float cameraSpeed = 0.2f;
-    public bool warn = false;
+ 
 
     public int floorCount;
 
@@ -25,42 +24,36 @@ public class CameraController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        instance = this;
+        Instance = this;
         floorCount = floorCount - 1;
-        Debug.Log(pos);
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        if (canGoUp)
-        {
-            GoUp();
-        }
+        
 
 
-
-        if (warn)
-        {
-            Shake();
-            WarningMessage();
-            warn = false;
-        }
     }
 
     public void Warn()
     {
-        warn = true;
+        Shake();
+        WarningMessage();
     }
-    void GoUp()
-    {
 
-        Vector2 move = new Vector2(0f, cameraSpeed);
-        transform.Translate(move, Space.Self);
-        if (transform.position.y > floorCount * 9f)
+
+
+
+    public IEnumerator GoUp()
+    {
+        while (transform.position.y < floorCount * 10f)
         {
-            canGoUp = false;
+            Vector2 move = new Vector2(0f, cameraSpeed);
+            transform.Translate(move, Space.Self);
+            yield return new WaitForFixedUpdate();
         }
+
     }
 
     void WarningMessage()
@@ -71,7 +64,7 @@ public class CameraController : MonoBehaviour
     }
     public void MoveCameraUp()
     {
-        canGoUp = true;
+        StartCoroutine(GoUp());
     }
 
     void Shake()
@@ -90,7 +83,7 @@ public class CameraController : MonoBehaviour
     }
     void StartCameraShaking()
     {
-        
+
         float cameraShakingOffsetX = Random.value * shakeMagnitude * 2 - shakeMagnitude;
         float cameraShakingOffsetY = Random.value * shakeMagnitude * 2 - shakeMagnitude;
         Vector3 cameraIntermadiatePosition = transform.position;
@@ -105,4 +98,5 @@ public class CameraController : MonoBehaviour
         CancelInvoke("ProduceFallingTile");
         transform.position = startPosition;
     }
+
 }

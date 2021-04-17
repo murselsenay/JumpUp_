@@ -6,6 +6,8 @@ TagManager:
   tags:
   - Button
   - Coin
+  - CoinTarget
+  - FallingTile
   layers:
   - Default
   - TransparentFX
@@ -57,4 +59,7 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 3860783093
+    locked: 0
+  - name: UI
+    uniqueID: 1274615169
     locked: 0
