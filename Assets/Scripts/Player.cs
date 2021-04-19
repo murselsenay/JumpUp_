@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +23,7 @@ public class Player : MonoBehaviour
         if (other.gameObject.tag=="FallingTile")
         {
             UIController.Instance.UpdatePlayerHealthBar(-5f);
+            PlayerController.Instance.PlayerGetDamage();
             Destroy(other.gameObject);
         }
     }

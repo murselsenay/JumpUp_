@@ -5,22 +5,27 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+
+    public static PlayerController Instance;
+
+
     Rigidbody2D playerBody;
-    Transform playerTransform;
     Animator playerAnimController;
     private bool isGrounded;
     public Transform groundCheck;
     public float checkRadius;
     public LayerMask groundLayer;
 
-    public float speed=5f;
+    public float speed = 5f;
     private float horizontalVelocity;
 
-
+    private void Awake()
+    {
+        Instance = this;
+    }
     // Start is called before the first frame update
     void Start()
     {
-        playerTransform = transform;
         playerBody = gameObject.GetComponent<Rigidbody2D>();
         playerAnimController = gameObject.GetComponent<Animator>();
     }
@@ -36,7 +41,7 @@ public class PlayerController : MonoBehaviour
     {
         horizontalVelocity = _velocity;
         gameObject.GetComponent<Animator>().SetBool("canRun", true);
-        if(_velocity==1)
+        if (_velocity == 1)
             transform.localScale = new Vector2(1f, 1f);
         if (_velocity == -1)
             transform.localScale = new Vector2(-1f, 1f);
@@ -95,5 +100,36 @@ public class PlayerController : MonoBehaviour
             playerBody.velocity = Vector2.up * 7f;
     }
 
-   
+    public void PlayerGetDamage()
+    {
+        float[] forces = { -1000f, 1000f };
+        playerBody.AddForce(new Vector2(forces[Random.Range(0, 2)], 250f), ForceMode2D.Force);
+        if (DamageEffectCoroutine != null)
+            StopCoroutine(DamageEffectCoroutine);
+        DamageEffectCoroutine = StartCoroutine(DamageEffect());
+    }
+
+
+    Coroutine DamageEffectCoroutine;
+
+    IEnumerator DamageEffect()
+    {
+
+
+        var count = 10;
+        var tempColor = gameObject.GetComponent<SpriteRenderer>().color;
+        while (count > 0)
+        {
+            tempColor.a = 0.5f;
+            gameObject.GetComponent<SpriteRenderer>().color = tempColor;
+            yield return new WaitForSeconds(0.075f);
+            tempColor.a = 1f;
+            gameObject.GetComponent<SpriteRenderer>().color = tempColor;
+            yield return new WaitForSeconds(0.075f);
+            count--;
+        }
+
+
+    }
+
 }
