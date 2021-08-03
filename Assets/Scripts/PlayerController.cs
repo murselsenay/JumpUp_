@@ -35,6 +35,35 @@ public class PlayerController : MonoBehaviour
     {
         CheckInput();
         Move(horizontalVelocity);
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            horizontalVelocity = -1;
+            gameObject.GetComponent<Animator>().SetBool("canRun", true);
+            transform.localScale = new Vector2(-1f, 1f);
+
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            horizontalVelocity = 1;
+            gameObject.GetComponent<Animator>().SetBool("canRun", true);
+            transform.localScale = new Vector2(1f, 1f);
+        }
+
+        if (Input.GetKeyUp(KeyCode.A))
+        {
+            horizontalVelocity = 0;
+            gameObject.GetComponent<Animator>().SetBool("canRun", false);
+        }
+        if (Input.GetKeyUp(KeyCode.D))
+        {
+            horizontalVelocity = 0;
+            gameObject.GetComponent<Animator>().SetBool("canRun", false);
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Jump();
+        }
+
     }
 
     public void MoveButtonHandler(float _velocity)
